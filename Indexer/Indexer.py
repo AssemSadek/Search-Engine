@@ -9,7 +9,7 @@ class CreateIndex:
     cursor = None
     soup = None
     L_ID = None
-    Removal_words = ['the', 'for', 'a', 'is', 'an', '', 'by', 'on', 'in', 'to', '_']
+    Removal_words = ['the', 'for', 'a', 'is', 'an', '', 'by', 'on', 'in', 'to', '_', ' ', '-', '|','\\','.',',','?']
     Title, H1, H2, H3, H4, H5, H6, P, LI, Table = [],[],[],[],[],[],[],[],[],[]
     All_Words, All_Headers, All_Others, All_Titles = [],[],[],[]
     No_Titles, No_Headers, No_Others, TF, Pos , W_Type= [],[],[],[],[],[]
@@ -73,19 +73,19 @@ class CreateIndex:
     
     def __init__(self, cursor):
         Query = Queries.queries(cursor)
-        
         rows = Query.Get_html()
         for row in rows:
+            print(row[0])
             self.L_ID = row[0]
             self.soup = row[2]
-            self.soup = self.soup.replace('class="row bigbox container mi-df-local locked-single"', 'class="row bigbox container mi-df-local single-local"')
+            self.soup = self.soup.replace('class="srow bigbox container mi-df-local locked-single"', 'class="row bigbox container mi-df-local single-local"')
             self.soup = BS(self.soup,"html.parser")
             self.Get_Text_In_Tags() 
             self.Get_List_Words()
-            self.Calculations()       
-            
-            Query.call_insert_word(self.L_ID,self.All_Words,self.TF,self.No_Titles,self.No_Headers,self.No_Others)
-            Query.call_insert_phrase(self.L_ID,self.All_Titles,self.All_Headers,self.All_Others)
+            self.Calculations()
+
+            Query.insert_word_DB(self.L_ID,self.All_Words,self.TF,self.No_Titles,self.No_Headers,self.No_Others)
+            Query.insert_phrase_DB(self.L_ID,self.All_Titles,self.All_Headers,self.All_Others)
             Query.Indexed(self.L_ID)
             
             self.All_Words, self.All_Headers, self.All_Others, self.All_Titles = [],[],[],[]
