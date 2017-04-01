@@ -83,7 +83,7 @@ class CreateIndex:
             self.Get_Text_In_Tags() 
             self.Get_List_Words()
             self.Calculations()
-
+            
             Query.insert_word_DB(self.L_ID,self.All_Words,self.TF,self.No_Titles,self.No_Headers,self.No_Others)
             Query.insert_phrase_DB(self.L_ID,self.All_Titles,self.All_Headers,self.All_Others)
             Query.Indexed(self.L_ID)

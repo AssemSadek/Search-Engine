@@ -3,7 +3,7 @@ class queries:
         self.cursor = cursor
 
     def Get_html(self):
-        Query_Get_Links = "select* from web_pages where Indexed = 0"
+        Query_Get_Links = "select* from web_pages where Indexed = 0 and Visited =  1"
         self.cursor.execute(Query_Get_Links)
         rows = self.cursor.fetchall()
         return rows
@@ -13,6 +13,7 @@ class queries:
         Query_Insert = "insert into words(word,L_ID,TF,No_Titles,No_Headers,No_others) values(%s,%s,%s,%s,%s,%s)"
         self.cursor.execute(Query_Delete, (L_ID,))
         i = 0
+        input()
         for x in All_Words:
             args =(x.encode("utf-8"),L_ID,TF[i],No_Titles[i],No_Headers[i],No_Others[i])
             self.cursor.execute(Query_Insert, args)

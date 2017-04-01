@@ -4,7 +4,6 @@
 
 import Connection as connect
 import Indexer as Index
-import sys
 import os
 
 connection = connect.Connection()
@@ -24,4 +23,4 @@ if __name__ == '__main__':
         clear()
         print("The Indexer is Exiting")
         connection.Close_Connection()
-        sys.exit(0)
+        raise SystemExit
